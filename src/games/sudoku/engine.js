@@ -95,7 +95,7 @@ export function solve(puzzle, limit = 2) {
   return { count, solution, aborted };
 }
 
-const yieldToPage = () => new Promise((resolve) => setTimeout(resolve, 0));
+export const yieldToPage = () => new Promise((resolve) => setTimeout(resolve, 0));
 
 export async function generatePuzzle(level) {
   const groups = [0, 1, 2];

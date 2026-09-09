@@ -3,7 +3,7 @@ import './styles.css';
 import { mountSiteChrome } from '../../shared/site.js';
 import { readJSON, writeJSON } from '../../shared/storage.js';
 import { FULL, LEVELS, STORAGE_KEY } from './config.js';
-import { rowOf, colOf, peers, solve, generatePuzzle } from './engine.js';
+import { rowOf, colOf, peers, solve, generatePuzzle, yieldToPage } from './engine.js';
 
 mountSiteChrome({ footerNote: '不赶时间，慢慢想。' });
 
