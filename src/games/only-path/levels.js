@@ -1,8 +1,9 @@
 import { createLevel } from './engine.js';
+import { CHALLENGE_LEVELS } from './challenge-levels.js';
 
-// # fixed obstacle, . editable floor, * protected route, S start, T finish.
+// # fixed obstacle, . editable floor, o non-buildable passage, * route, S start, T finish.
 // Keep IDs stable: browser saves refer to them. Budgets are ceilings, not scores.
-export const LEVELS = [
+const INTRO_LEVELS = [
   {
     id: 'first-detour',
     title: '另一条路',
@@ -71,8 +72,13 @@ export const LEVELS = [
     title: '留白的答案',
     chapter: '推演',
     budget: 4,
-    description: '最后一关是一片空地。试着让剩余空地只与蓝线的一个位置相连。',
+    description: '入门最后一关是一片空地。试着让剩余空地只与蓝线的一个位置相连。',
     hint: '把空地当成一整个区域：只要它能连接蓝线上两个不同的位置，就可能形成绕路。',
     rows: ['#######', '#S***T#', '#.....#', '#.....#', '#######'],
   },
+];
+
+export const LEVELS = [
+  ...INTRO_LEVELS.map((level) => ({ ...level, difficulty: 'intro' })),
+  ...CHALLENGE_LEVELS,
 ].map(createLevel);

@@ -71,7 +71,13 @@ export class BoardView {
     this.buttons.forEach((button, index) => {
       button.tabIndex = index === this.cursor ? 0 : -1;
     });
-    if (focus) this.buttons[this.cursor].focus({ preventScroll: true });
+    if (focus) {
+      const button = this.buttons[this.cursor];
+      button.focus({ preventScroll: true });
+      if (this.root.classList.contains('is-zoomed')) {
+        button.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      }
+    }
   }
 
   render(walls, alternate = null) {
@@ -84,24 +90,27 @@ export class BoardView {
       button.className =
         'only-tile' +
         (type === '#' ? ' is-stone' : '') +
+        (type === 'o' ? ' is-passage' : '') +
         (protectedCell ? ' is-target' : '') +
         (placed ? ' is-wall' : '') +
         (highlighted.has(cell) ? ' is-alternative' : '') +
         (type === 'S' || type === 'T' ? ' is-endpoint' : '');
       button.firstElementChild.textContent =
-        type === 'S' ? '起' : type === 'T' ? '终' : placed ? '×' : '';
+        type === 'S' ? '起' : type === 'T' ? '终' : placed ? '×' : type === 'o' ? '○' : '';
       const label =
         type === '#'
           ? '固定障碍'
-          : type === 'S'
-            ? '起点'
-            : type === 'T'
-              ? '终点'
-              : protectedCell
-                ? '指定路线，不可放墙'
-                : placed
-                  ? '已放置的墙，点击移除'
-                  : '空地，点击放墙';
+          : type === 'o'
+            ? '禁建通道，可以经过但不能放墙'
+            : type === 'S'
+              ? '起点'
+              : type === 'T'
+                ? '终点'
+                : protectedCell
+                  ? '指定路线，不可放墙'
+                  : placed
+                    ? '已放置的墙，点击移除'
+                    : '空地，点击放墙';
       button.setAttribute(
         'aria-label',
         '第 ' +

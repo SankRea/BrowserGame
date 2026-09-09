@@ -2,7 +2,7 @@ import '../../styles/base.css';
 import './styles.css';
 import { mountSiteChrome } from '../../shared/site.js';
 import { HISTORY_LIMIT } from './config.js';
-import { analyzeRoute, isPlaceable } from './engine.js';
+import { analyzeRoute, getWallConflict, isPlaceable, wallCounts } from './engine.js';
 import { LEVELS } from './levels.js';
 import { loadProgress, saveProgress } from './progress.js';
 import { BoardView } from './renderer.js';
@@ -39,6 +39,13 @@ const ui = Object.fromEntries(
     'previous',
     'next',
     'save-notice',
+    'challenge',
+    'challenge-entry',
+    'rules',
+    'rule-text',
+    'passage-legend',
+    'selection',
+    'zoom',
   ].map((id) => [id, byId(id)]),
 );
 const { progress, available } = loadProgress(LEVELS);
@@ -75,9 +82,30 @@ function message(state, title, description) {
   ui['feedback-text'].textContent = description;
 }
 
+function updateSelection() {
+  const { rows, columns } = wallCounts(level, walls);
+  const row = Math.floor(view.cursor / level.width);
+  const column = view.cursor % level.width;
+  ui.selection.textContent =
+    '第 ' +
+    (row + 1) +
+    ' 行：' +
+    rows[row] +
+    ' / ' +
+    (level.rowLimit ?? '不限') +
+    ' 堵 · 第 ' +
+    (column + 1) +
+    ' 列：' +
+    columns[column] +
+    ' / ' +
+    (level.columnLimit ?? '不限') +
+    ' 堵';
+}
+
 function render() {
   const hasAlternative = result?.status === 'alternative';
   view.render(walls, hasAlternative && showCounterexample ? result.route : null);
+  updateSelection();
   ui.used.textContent = walls.size;
   ui.budget.textContent = level.budget;
   ui.checks.textContent = checks;
@@ -136,7 +164,9 @@ function toggleWall(cell) {
       '这一格保持原样',
       level.cells[cell] === '#'
         ? '这是固定障碍。请在白色空地上放置你的墙。'
-        : '指定路线、起点和终点需要保持畅通。请在白色空地上放墙。',
+        : level.cells[cell] === 'o'
+          ? '圆圈是禁建通道：路线可以经过，但你不能在这里放墙。'
+          : '指定路线、起点和终点需要保持畅通。请在白色空地上放墙。',
     );
     return;
   }
@@ -147,6 +177,26 @@ function toggleWall(cell) {
       '本关最多放 ' + level.budget + ' 堵墙。点击已经放下的深色墙，即可移除。',
     );
     return;
+  }
+  if (!walls.has(cell)) {
+    const conflict = getWallConflict(level, new Set([...walls, cell]));
+    if (conflict) {
+      const axis = conflict.axis === 'row' ? '行' : '列';
+      message(
+        'notice',
+        '这一' + axis + '的墙数已满',
+        '第 ' +
+          (conflict.index + 1) +
+          ' ' +
+          axis +
+          '最多放 ' +
+          conflict.limit +
+          ' 堵墙。先移走该' +
+          axis +
+          '的一堵墙，或选择其他位置。',
+      );
+      return;
+    }
   }
   remember();
   if (walls.has(cell)) walls.delete(cell);
@@ -204,7 +254,7 @@ function checkRoute(count = true) {
     message(
       'notice',
       '这个布局暂时无法检查',
-      '请清空本关重新布置，保持蓝色路线畅通，并遵守墙的数量限制。',
+      '请清空本关重新布置，只在可筑墙空地上放墙，并遵守总墙数及每行、每列的限制。',
     );
   }
   render();
@@ -226,6 +276,16 @@ function loadLevel(index, focus = false) {
   ui['level-number'].textContent =
     String(levelIndex + 1).padStart(2, '0') + ' / ' + String(LEVELS.length).padStart(2, '0');
   ui.description.textContent = level.description;
+  const rules = [];
+  if (level.cells.includes('o')) rules.push('○ 格可通行，但不能筑墙');
+  if (level.rowLimit !== undefined) rules.push('每行最多 ' + level.rowLimit + ' 堵墙');
+  if (level.columnLimit !== undefined) rules.push('每列最多 ' + level.columnLimit + ' 堵墙');
+  ui.rules.hidden = rules.length === 0;
+  ui['rule-text'].textContent =
+    rules.join('；') + (rules.length ? '。行列限额只计算你放的墙。' : '');
+  ui['passage-legend'].hidden = !level.cells.includes('o');
+  ui.selection.hidden = level.rowLimit === undefined && level.columnLimit === undefined;
+  ui['challenge-entry'].hidden = level.difficulty === 'challenge';
   ui['hint-text'].textContent = level.hint;
   ui.hint.open = false;
   ui['level-select'].value = level.id;
@@ -248,24 +308,39 @@ function navigate(index) {
   persist();
   loadLevel(index);
   persist();
+  const url = new URL(window.location.href);
+  url.searchParams.set('level', level.id);
+  window.history.replaceState(null, '', url);
 }
 
-LEVELS.forEach((item) => {
-  const option = document.createElement('option');
-  option.value = item.id;
-  ui['level-select'].append(option);
-});
+for (const [difficulty, label] of [
+  ['intro', '入门 · 认识路线'],
+  ['challenge', '挑战 · 全局推理'],
+]) {
+  const group = document.createElement('optgroup');
+  group.label = label;
+  for (const item of LEVELS.filter((item) => item.difficulty === difficulty)) {
+    const option = document.createElement('option');
+    option.value = item.id;
+    group.append(option);
+  }
+  ui['level-select'].append(group);
+}
 
 listen(ui.board, 'click', (event) => {
   const button = event.target.closest('button[data-cell]');
   if (!button) return;
   const cell = Number(button.dataset.cell);
   view.setCursor(cell);
+  updateSelection();
   toggleWall(cell);
 });
 listen(ui.board, 'focusin', (event) => {
   const button = event.target.closest('button[data-cell]');
-  if (button) view.setCursor(Number(button.dataset.cell));
+  if (button) {
+    view.setCursor(Number(button.dataset.cell));
+    updateSelection();
+  }
 });
 listen(ui.board, 'keydown', (event) => {
   if (event.altKey || event.ctrlKey || event.metaKey) return;
@@ -309,6 +384,18 @@ listen(document, 'keydown', (event) => {
     actions[key]();
   }
 });
+listen(ui.challenge, 'click', () => {
+  const next = LEVELS.findIndex(
+    (item) => item.difficulty === 'challenge' && !progress.best[item.id],
+  );
+  navigate(next === -1 ? LEVELS.findIndex((item) => item.difficulty === 'challenge') : next);
+  view.setCursor(view.cursor, true);
+});
+listen(ui.zoom, 'click', () => {
+  const zoomed = ui.board.classList.toggle('is-zoomed');
+  ui.zoom.setAttribute('aria-pressed', String(zoomed));
+  ui.zoom.textContent = zoomed ? '缩回棋盘' : '放大棋盘';
+});
 listen(ui.undo, 'click', undo);
 listen(ui.redo, 'click', redo);
 listen(ui.reset, 'click', reset);
@@ -335,7 +422,11 @@ listen(ui.continue, 'click', () => {
   view.setCursor(view.cursor, true);
 });
 
-loadLevel(LEVELS.findIndex((item) => item.id === progress.levelId));
+const requestedLevel = new URLSearchParams(window.location.search).get('level');
+const requestedIndex = LEVELS.findIndex((item) => item.id === requestedLevel);
+loadLevel(
+  requestedIndex === -1 ? LEVELS.findIndex((item) => item.id === progress.levelId) : requestedIndex,
+);
 storageNotice(available);
 
 if (import.meta.hot) import.meta.hot.dispose(() => events.abort());

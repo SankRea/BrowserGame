@@ -25,6 +25,13 @@
         <span class="only-category">单人 · 路线推理</span>
       </div>
 
+      <div class="only-challenge-entry" id="only-challenge-entry">
+        <div>
+          <strong>熟悉规则了？</strong><span>试试 5 个挑战关：多重岔口、禁建通道与行列限制。</span>
+        </div>
+        <button type="button" id="only-challenge">进入挑战 →</button>
+      </div>
+
       <div class="only-workspace">
         <section class="only-play-panel" aria-labelledby="only-level-title">
           <div class="only-level-top">
@@ -32,16 +39,29 @@
               <span class="only-kicker" id="only-chapter">观察 / 01</span>
               <h2 id="only-level-title">准备棋盘</h2>
             </div>
-            <span class="only-level-number" id="only-level-number">01 / 08</span>
+            <span class="only-level-number" id="only-level-number">01 / 13</span>
           </div>
           <p class="only-level-description" id="only-description">正在加载关卡。</p>
+          <div class="only-rules" id="only-rules" hidden>
+            <strong>本关限制</strong>
+            <p id="only-rule-text"></p>
+          </div>
           <div class="only-legend" aria-label="棋盘图例">
             <span><i class="legend-route"></i>指定路线</span>
             <span><i class="legend-wall"></i>你的墙</span>
             <span><i class="legend-fixed"></i>固定障碍</span>
+            <span id="only-passage-legend" hidden><i class="legend-passage">○</i>禁建通道</span>
             <span><i class="legend-alternative"></i>另一条路</span>
           </div>
-          <div class="only-board" id="only-board" tabindex="-1"></div>
+          <div class="only-board-viewport">
+            <div class="only-board" id="only-board" tabindex="-1"></div>
+          </div>
+          <div class="only-board-options">
+            <p id="only-selection" hidden></p>
+            <button type="button" id="only-zoom" aria-pressed="false" aria-controls="only-board">
+              放大棋盘
+            </button>
+          </div>
           <p class="only-board-help" id="only-board-help">
             点击空地放墙，再点一次移除。蓝色格子保持畅通。
           </p>
@@ -110,7 +130,7 @@
       <section class="only-level-picker" aria-label="选择关卡">
         <div>
           <label for="only-level-select">换一个角度想想</label
-          ><span id="only-completed">已完成 0 / 8</span>
+          ><span id="only-completed">已完成 0 / 13</span>
         </div>
         <div class="only-level-navigation">
           <button type="button" id="only-previous" aria-label="上一关" disabled>←</button>

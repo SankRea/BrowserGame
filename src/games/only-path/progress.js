@@ -1,6 +1,6 @@
 import { readJSON, writeJSON } from '../../shared/storage.js';
 import { STORAGE_KEY } from './config.js';
-import { analyzeRoute, isPlaceable } from './engine.js';
+import { analyzeRoute, getWallConflict, isPlaceable } from './engine.js';
 
 const record = (value) =>
   value && typeof value === 'object' && !Array.isArray(value) ? value : {};
@@ -12,7 +12,8 @@ function cleanWalls(level, value) {
     value.some((cell) => !isPlaceable(level, cell))
   )
     return [];
-  return [...new Set(value)];
+  const walls = [...new Set(value)];
+  return getWallConflict(level, walls) ? [] : walls;
 }
 
 export function loadProgress(levels) {
