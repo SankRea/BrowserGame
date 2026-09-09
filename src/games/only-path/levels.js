@@ -1,0 +1,78 @@
+import { createLevel } from './engine.js';
+
+// # fixed obstacle, . editable floor, * protected route, S start, T finish.
+// Keep IDs stable: browser saves refer to them. Budgets are ceilings, not scores.
+export const LEVELS = [
+  {
+    id: 'first-detour',
+    title: '另一条路',
+    chapter: '观察',
+    budget: 1,
+    description: '蓝线已经通向终点。让下面那条绕路失效，就只剩它了。',
+    hint: '沿着下方的绕路找一格空地。一堵墙足以切断这个环。',
+    rows: ['#####', '#S*T#', '#.#.#', '#...#', '#####'],
+  },
+  {
+    id: 'two-sides',
+    title: '上下之间',
+    chapter: '观察',
+    budget: 2,
+    description: '上面可以绕，下面也可以绕。一次检查只会展示其中一条。',
+    hint: '上下两条绕路互不经过对方。封住一边以后，还要照顾另一边。',
+    rows: ['#######', '#.....#', '#.###.#', '#S***T#', '#.###.#', '#.....#', '#######'],
+  },
+  {
+    id: 'shared-junction',
+    title: '恰好一堵',
+    chapter: '发现',
+    budget: 1,
+    description: '三个岔口，一堵墙。找出几条绕路共用的位置。',
+    hint: '试着观察上方横廊的中央：它同时连着左侧、右侧和中间的岔口。',
+    rows: ['#######', '#.....#', '#.#.#.#', '#S***T#', '#######'],
+  },
+  {
+    id: 'inside-corner',
+    title: '转角里面',
+    chapter: '发现',
+    budget: 2,
+    description: '指定路线转了一个弯。捷径可以从中途离开，再从中途回来。',
+    hint: '先看紧贴蓝色转角的那一格；再检查沿着左下角走的绕路。',
+    rows: ['#####', '#S**#', '#..*#', '#..T#', '#####'],
+  },
+  {
+    id: 'harmless-branches',
+    title: '留下死胡同',
+    chapter: '辨别',
+    budget: 1,
+    description: '空地不必全部封住。只有真正能绕回终点的分支才需要处理。',
+    hint: '右边和下方有死胡同。路线不能重复经过格子，所以走进去再折返不算另一条路。',
+    rows: ['#######', '#S***T#', '#.#.#.#', '#...#.#', '###.#.#', '#...###', '#######'],
+  },
+  {
+    id: 'staggered-loops',
+    title: '半路重逢',
+    chapter: '辨别',
+    budget: 2,
+    description: '两段绕路在蓝线中间相遇。把每一段重新接入蓝线的位置找出来。',
+    hint: '上方绕过前半段，下方绕过后半段。它们都能和蓝线组合成一条完整路线。',
+    rows: ['#######', '#...###', '#.#.###', '#S***T#', '###.#.#', '###...#', '#######'],
+  },
+  {
+    id: 'far-connection',
+    title: '远处仍相连',
+    chapter: '推演',
+    budget: 3,
+    description: '堵住眼前的捷径之后，远处的横廊可能仍把两个岔口连在一起。',
+    hint: '上方左右两组相邻岔口各需要处理；最上面连接它们的横廊，也要再检查一次。',
+    rows: ['#######', '#.....#', '#..#..#', '#S***T#', '#.#.#.#', '#.###.#', '#######'],
+  },
+  {
+    id: 'open-courtyard',
+    title: '留白的答案',
+    chapter: '推演',
+    budget: 4,
+    description: '最后一关是一片空地。试着让剩余空地只与蓝线的一个位置相连。',
+    hint: '把空地当成一整个区域：只要它能连接蓝线上两个不同的位置，就可能形成绕路。',
+    rows: ['#######', '#S***T#', '#.....#', '#.....#', '#######'],
+  },
+].map(createLevel);

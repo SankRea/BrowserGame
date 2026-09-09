@@ -3,6 +3,7 @@ import '../styles/home.css';
 import { mountSiteChrome, sitePath } from '../shared/site.js';
 import { drawDinoPreview, loadDinoSprite } from '../games/dino/renderer.js';
 import { GAMES } from './catalog.js';
+import { createOnlyPathPreview } from '../games/only-path/preview.js';
 
 mountSiteChrome({ home: true });
 
@@ -14,6 +15,7 @@ function element(tag, className = '', text = '') {
 }
 
 function preview(id, featured = false) {
+  if (id === 'only-path') return createOnlyPathPreview();
   if (id === 'dino') {
     const canvas = element(
       'canvas',

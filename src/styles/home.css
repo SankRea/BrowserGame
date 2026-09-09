@@ -519,6 +519,12 @@ h1 > span {
 .sudoku-preview > span:nth-child(n + 73) {
   border-bottom: 0;
 }
+.only-cover-preview {
+  display: block;
+  width: 74%;
+  max-width: 238px;
+  height: 175px;
+}
 .sudoku-cover-preview {
   width: 142px;
   transform: rotate(-6deg);
@@ -736,6 +742,10 @@ h1 > span {
   }
   .game-cover {
     height: 143px;
+  }
+  .only-cover-preview {
+    width: 70%;
+    height: 108px;
   }
   .sudoku-cover-preview {
     width: 110px;

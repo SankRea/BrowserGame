@@ -13,6 +13,7 @@ export default defineConfig({
         home: fileURLToPath(new URL('./index.html', import.meta.url)),
         sudoku: fileURLToPath(new URL('./pages/sudoku.html', import.meta.url)),
         dino: fileURLToPath(new URL('./pages/dino.html', import.meta.url)),
+        onlyPath: fileURLToPath(new URL('./pages/only-path.html', import.meta.url)),
       },
     },
   },

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta
+      name="description"
+      content="用有限的墙，让指定路线成为唯一的答案。一个关于反例、取舍和留白的逻辑小游戏。"
+    />
+    <title>唯一的路 · Playroom 游间</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="module" src="../src/games/only-path/index.js"></script>
+  </head>
+  <body class="only-page" data-root="../">
+    <a class="skip-link" href="#only-board">跳转到棋盘</a>
+    <header class="site-header" id="site-header"></header>
+    <main class="only-shell">
+      <div class="only-heading">
+        <div>
+          <div class="eyebrow">NO. 003 / ONE WAY LEFT</div>
+          <h1>唯一的路<span>留一个答案。</span></h1>
+          <p>放下几堵墙，让每一条绕路，都回到同一个答案。</p>
+        </div>
+        <span class="only-category">单人 · 路线推理</span>
+      </div>
+
+      <div class="only-workspace">
+        <section class="only-play-panel" aria-labelledby="only-level-title">
+          <div class="only-level-top">
+            <div>
+              <span class="only-kicker" id="only-chapter">观察 / 01</span>
+              <h2 id="only-level-title">准备棋盘</h2>
+            </div>
+            <span class="only-level-number" id="only-level-number">01 / 08</span>
+          </div>
+          <p class="only-level-description" id="only-description">正在加载关卡。</p>
+          <div class="only-legend" aria-label="棋盘图例">
+            <span><i class="legend-route"></i>指定路线</span>
+            <span><i class="legend-wall"></i>你的墙</span>
+            <span><i class="legend-fixed"></i>固定障碍</span>
+            <span><i class="legend-alternative"></i>另一条路</span>
+          </div>
+          <div class="only-board" id="only-board" tabindex="-1"></div>
+          <p class="only-board-help" id="only-board-help">
+            点击空地放墙，再点一次移除。蓝色格子保持畅通。
+          </p>
+          <div class="only-board-tools" role="group" aria-label="编辑棋盘">
+            <button type="button" id="only-undo" disabled>↶ 撤销 <kbd>Z</kbd></button>
+            <button type="button" id="only-redo" disabled>↷ 重做 <kbd>Y</kbd></button>
+            <button type="button" id="only-reset" disabled>清空 <kbd>R</kbd></button>
+          </div>
+        </section>
+
+        <aside class="only-side-panel" aria-label="关卡目标和检查结果">
+          <div class="only-mission">
+            <span class="only-kicker">你的任务</span>
+            <h2>保留蓝线，<br />排除其他可能。</h2>
+            <p>从「起」走到「终」，只能上下左右移动，且不能重复经过任何格子。</p>
+            <div class="only-stats">
+              <div>
+                <span>已用墙数</span
+                ><strong
+                  ><span id="only-used">0</span
+                  ><small> / <span id="only-budget">—</span></small></strong
+                >
+              </div>
+              <div><span>检查次数</span><strong id="only-checks">0</strong></div>
+            </div>
+            <p class="only-budget-note" id="only-budget-note">墙不用全部用完，留下唯一的路就好。</p>
+            <button class="only-primary" type="button" id="only-check" disabled>
+              检查路线 <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+
+          <div
+            class="only-feedback"
+            id="only-feedback"
+            data-state="ready"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <span class="only-feedback-symbol" id="only-feedback-symbol" aria-hidden="true">?</span>
+            <div>
+              <h3 id="only-feedback-title">先看看另一种可能</h3>
+              <p id="only-feedback-text">可以先检查一次，让橙色路线带你发现岔路。</p>
+            </div>
+          </div>
+          <div class="only-result-actions">
+            <button type="button" id="only-counter-toggle" aria-pressed="true" hidden>
+              隐藏橙色反例
+            </button>
+            <button class="only-next-action" type="button" id="only-continue" hidden>
+              下一关 →
+            </button>
+            <button type="button" id="only-best" hidden>恢复已通过方案</button>
+          </div>
+          <details class="only-hint" id="only-hint">
+            <summary>卡住了？看一点思路 <span aria-hidden="true">+</span></summary>
+            <p id="only-hint-text"></p>
+          </details>
+          <div class="only-note">
+            <span aria-hidden="true">✦</span>
+            <p>每次找到的反例都是真正可走的路线。修改布局后，再检查一次。</p>
+          </div>
+        </aside>
+      </div>
+
+      <section class="only-level-picker" aria-label="选择关卡">
+        <div>
+          <label for="only-level-select">换一个角度想想</label
+          ><span id="only-completed">已完成 0 / 8</span>
+        </div>
+        <div class="only-level-navigation">
+          <button type="button" id="only-previous" aria-label="上一关" disabled>←</button>
+          <select id="only-level-select" disabled></select>
+          <button type="button" id="only-next" aria-label="下一关" disabled>→</button>
+        </div>
+      </section>
+      <div class="only-footnotes">
+        <p id="only-save-notice">进度与通过方案保存在当前浏览器。</p>
+        <p>键盘：方向键选格 · 空格放墙 · C 检查 · Z / Y 撤销重做 · R 清空</p>
+      </div>
+      <noscript><p class="only-noscript">请开启 JavaScript，以显示棋盘并检查路线。</p></noscript>
+    </main>
+    <footer class="site-footer only-footer" id="site-footer"></footer>
+  </body>
+</html>
