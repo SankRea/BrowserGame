@@ -3,7 +3,7 @@ import globals from 'globals';
 export default [
   { ignores: ['dist/**', 'node_modules/**', '.npm-cache/**', 'public/**'] },
   {
-    files: ['**/*.js'],
+    files: ['**/*.js', '**/*.mjs'],
     languageOptions: { ecmaVersion: 'latest', sourceType: 'module' },
     rules: {
       'no-undef': 'error',
@@ -17,5 +17,8 @@ export default [
     },
   },
   { files: ['src/**/*.js'], languageOptions: { globals: globals.browser } },
-  { files: ['*.config.js'], languageOptions: { globals: globals.node } },
+  {
+    files: ['*.config.js', 'scripts/**/*.mjs', 'tests/**/*.mjs'],
+    languageOptions: { globals: globals.node },
+  },
 ];

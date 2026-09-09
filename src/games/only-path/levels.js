@@ -1,7 +1,7 @@
 import { createLevel } from './engine.js';
 import { CHALLENGE_LEVELS } from './challenge-levels.js';
 
-// # fixed obstacle, . editable floor, o non-buildable passage, * route, S start, T finish.
+// # fixed obstacle, . editable floor, * protected route, S start, T finish.
 // Keep IDs stable: browser saves refer to them. Budgets are ceilings, not scores.
 const INTRO_LEVELS = [
   {

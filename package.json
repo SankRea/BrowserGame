@@ -12,6 +12,8 @@
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
     "lint": "eslint .",
+    "analyze:only-path": "node scripts/analyze-only-path.mjs",
+    "test:only-path": "node --test tests/only-path.test.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

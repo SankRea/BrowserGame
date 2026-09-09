@@ -22,6 +22,7 @@ export class BoardView {
     this.level = level;
     this.buttons = [];
     this.root.replaceChildren();
+    this.root.classList.toggle('is-large', level.width > 13 || level.height > 13);
     this.root.style.setProperty('--board-columns', level.width);
     this.root.style.aspectRatio = level.width + ' / ' + level.height;
     const grid = document.createElement('div');
@@ -90,27 +91,24 @@ export class BoardView {
       button.className =
         'only-tile' +
         (type === '#' ? ' is-stone' : '') +
-        (type === 'o' ? ' is-passage' : '') +
         (protectedCell ? ' is-target' : '') +
         (placed ? ' is-wall' : '') +
         (highlighted.has(cell) ? ' is-alternative' : '') +
         (type === 'S' || type === 'T' ? ' is-endpoint' : '');
       button.firstElementChild.textContent =
-        type === 'S' ? '起' : type === 'T' ? '终' : placed ? '×' : type === 'o' ? '○' : '';
+        type === 'S' ? '起' : type === 'T' ? '终' : placed ? '×' : '';
       const label =
         type === '#'
           ? '固定障碍'
-          : type === 'o'
-            ? '禁建通道，可以经过但不能放墙'
-            : type === 'S'
-              ? '起点'
-              : type === 'T'
-                ? '终点'
-                : protectedCell
-                  ? '指定路线，不可放墙'
-                  : placed
-                    ? '已放置的墙，点击移除'
-                    : '空地，点击放墙';
+          : type === 'S'
+            ? '起点'
+            : type === 'T'
+              ? '终点'
+              : protectedCell
+                ? '指定路线，不可放墙'
+                : placed
+                  ? '已放置的墙，点击移除'
+                  : '空地，点击放墙';
       button.setAttribute(
         'aria-label',
         '第 ' +

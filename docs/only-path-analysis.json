@@ -1,0 +1,220 @@
+{
+  "method": "Exhaustive minimum vertex cuts after degree-two corridor compression; cell-level checker cross-validation; connected-port-pair greedy with all optimal tie sequences.",
+  "before": [
+    {
+      "id": "challenge-folded-valley",
+      "title": "折返峡谷",
+      "size": [17, 17],
+      "budget": 4,
+      "routeCells": 53,
+      "routeTurns": 18,
+      "minimum": 4,
+      "complete": true,
+      "strategyClasses": "11",
+      "cellLayouts": "22",
+      "forcedWallGroups": [[[6, 12]], [[12, 12]]],
+      "solution": [
+        [6, 12],
+        [8, 8],
+        [12, 8],
+        [12, 12]
+      ],
+      "greedyWalls": 4,
+      "greedyWithinBudget": true,
+      "greedyCanReachOptimumWithBestTies": true,
+      "greedySolution": [
+        [6, 12],
+        [12, 8],
+        [12, 12],
+        [5, 8]
+      ],
+      "searchNodes": 68,
+      "milliseconds": 1
+    },
+    {
+      "id": "challenge-overlapping-courts",
+      "title": "重叠庭院",
+      "size": [21, 21],
+      "budget": 6,
+      "routeCells": 101,
+      "routeTurns": 35,
+      "minimum": 6,
+      "complete": true,
+      "strategyClasses": "7",
+      "cellLayouts": "10",
+      "forcedWallGroups": [[[8, 12]], [[10, 14]], [[16, 14]]],
+      "solution": [
+        [8, 10],
+        [8, 12],
+        [10, 8],
+        [10, 14],
+        [16, 10],
+        [16, 14]
+      ],
+      "greedyWalls": 8,
+      "greedyWithinBudget": false,
+      "greedyCanReachOptimumWithBestTies": true,
+      "greedySolution": [
+        [16, 14],
+        [7, 10],
+        [7, 12],
+        [8, 5],
+        [8, 14],
+        [10, 6],
+        [10, 14],
+        [14, 5]
+      ],
+      "searchNodes": 1967,
+      "milliseconds": 10
+    },
+    {
+      "id": "challenge-deep-spiral",
+      "title": "深庭回廊",
+      "size": [23, 23],
+      "budget": 10,
+      "routeCells": 119,
+      "routeTurns": 30,
+      "minimum": 10,
+      "complete": true,
+      "strategyClasses": "21",
+      "cellLayouts": "29",
+      "forcedWallGroups": [
+        [[6, 6]],
+        [[6, 14]],
+        [[8, 12]],
+        [[10, 18]],
+        [[14, 18]],
+        [[18, 8]],
+        [[16, 14]],
+        [[12, 8]]
+      ],
+      "solution": [
+        [6, 6],
+        [6, 14],
+        [8, 12],
+        [10, 18],
+        [14, 18],
+        [18, 8],
+        [16, 14],
+        [14, 8],
+        [14, 4],
+        [12, 8]
+      ],
+      "greedyWalls": 11,
+      "greedyWithinBudget": false,
+      "greedyCanReachOptimumWithBestTies": false,
+      "greedySolution": [
+        [18, 8],
+        [14, 18],
+        [6, 12],
+        [12, 8],
+        [6, 6],
+        [10, 18],
+        [16, 14],
+        [14, 3],
+        [4, 14],
+        [8, 12],
+        [14, 8]
+      ],
+      "searchNodes": 443,
+      "milliseconds": 2
+    }
+  ],
+  "after": [
+    {
+      "id": "challenge-quiet-river",
+      "title": "静水分流",
+      "size": [17, 17],
+      "budget": 3,
+      "routeCells": 15,
+      "routeTurns": 0,
+      "minimum": 3,
+      "complete": true,
+      "strategyClasses": "1",
+      "cellLayouts": "1",
+      "forcedWallGroups": [[[14, 4]], [[10, 12]], [[12, 14]]],
+      "solution": [
+        [14, 4],
+        [10, 12],
+        [12, 14]
+      ],
+      "greedyWalls": 4,
+      "greedyWithinBudget": false,
+      "greedyCanReachOptimumWithBestTies": false,
+      "greedySolution": [
+        [12, 6],
+        [10, 10],
+        [12, 12],
+        [14, 2]
+      ],
+      "searchNodes": 114,
+      "milliseconds": 1
+    },
+    {
+      "id": "challenge-hidden-courtyards",
+      "title": "庭院暗门",
+      "size": [19, 19],
+      "budget": 4,
+      "routeCells": 31,
+      "routeTurns": 1,
+      "minimum": 4,
+      "complete": true,
+      "strategyClasses": "4",
+      "cellLayouts": "4",
+      "forcedWallGroups": [[[8, 8]], [[14, 16]], [[16, 10]]],
+      "solution": [
+        [8, 8],
+        [14, 16],
+        [16, 6],
+        [16, 10]
+      ],
+      "greedyWalls": 6,
+      "greedyWithinBudget": false,
+      "greedyCanReachOptimumWithBestTies": false,
+      "greedySolution": [
+        [14, 6],
+        [4, 3],
+        [8, 3],
+        [14, 16],
+        [14, 3],
+        [16, 10]
+      ],
+      "searchNodes": 590,
+      "milliseconds": 3
+    },
+    {
+      "id": "challenge-ring-corridors",
+      "title": "回廊之间",
+      "size": [21, 19],
+      "budget": 5,
+      "routeCells": 51,
+      "routeTurns": 2,
+      "minimum": 5,
+      "complete": true,
+      "strategyClasses": "9",
+      "cellLayouts": "17",
+      "forcedWallGroups": [[[8, 12]], [[14, 16]], [[14, 12]], [[14, 4]]],
+      "solution": [
+        [4, 14],
+        [8, 12],
+        [14, 16],
+        [14, 12],
+        [14, 4]
+      ],
+      "greedyWalls": 7,
+      "greedyWithinBudget": false,
+      "greedyCanReachOptimumWithBestTies": false,
+      "greedySolution": [
+        [6, 12],
+        [8, 3],
+        [10, 16],
+        [14, 3],
+        [14, 14],
+        [2, 3],
+        [8, 12]
+      ],
+      "searchNodes": 2310,
+      "milliseconds": 14
+    }
+  ]
+}
