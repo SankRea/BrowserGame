@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta
+      name="description"
+      content="Playroom 游间，一个给日常留一点快乐的小游戏空间。玩一会儿，刚刚好。"
+    />
+    <title>Playroom 游间 · 玩一会儿，刚刚好</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="module" src="./src/app/home.js"></script>
+  </head>
+  <body data-root="./">
+    <a class="skip-link" href="#games">跳转到游戏列表</a>
+    <header class="site-header" id="site-header"></header>
+
+    <main class="main-shell">
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <div class="eyebrow"><span class="live-dot"></span> YOUR LITTLE PLAY BREAK</div>
+          <h1 id="page-title">玩一会儿，<span>刚刚好。</span></h1>
+          <p>把忙碌暂停一下，在这里找一点简单的快乐。</p>
+        </div>
+        <div class="intro-note">
+          <span class="small-spark" aria-hidden="true">✳</span
+          ><span>给日常留一点空白<br /><strong>也给快乐留一个位置。</strong></span>
+        </div>
+      </section>
+
+      <section class="featured-grid" aria-label="欢迎来到游间">
+        <article class="featured-card">
+          <div class="featured-copy">
+            <div class="pill" id="feature-eyebrow">CLASSIC / DINO RUN</div>
+            <h2 class="feature-title" id="feature-title">小恐龙，<br />向前跑。</h2>
+            <p id="feature-description">跳过仙人掌，躲过飞鸟。<br />再多跑一点，刷新自己的纪录。</p>
+            <a class="button button-dark" id="feature-link" href="./pages/dino.html"
+              >开始玩小恐龙 <span aria-hidden="true">↗</span></a
+            >
+            <span class="feature-meta" id="feature-meta">单人跑酷 · 键盘 / 触屏</span>
+          </div>
+          <div class="feature-slots dino-feature-wrap" aria-hidden="true">
+            <div class="slot-caption"><span>JUST KEEP RUNNING.</span><span>NO. 002</span></div>
+            <div id="feature-preview"></div>
+            <span class="slot-footnote">ONE MORE TRY. ONE MORE POSSIBILITY.</span>
+          </div>
+        </article>
+        <aside class="break-card">
+          <div class="break-top">
+            <span>IN YOUR OWN TIME</span><span aria-hidden="true">↗</span>
+          </div>
+          <span class="break-spark" aria-hidden="true">✳</span>
+          <h2>不赶时间，<br />慢慢玩就好。</h2>
+          <div class="break-bottom">
+            <span>JUST FOR FUN.</span><span aria-hidden="true">( : )</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="games-section" id="games" aria-labelledby="games-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="games-title">发现你的下一局</h2>
+            <span class="game-count">游戏大厅</span>
+          </div>
+          <span class="section-note">小体量，大快乐。</span>
+        </div>
+        <div class="collection-bar">
+          <span class="collection-label">全部游戏</span
+          ><span class="collection-status"
+            ><span></span> <span id="collection-count">2 款可玩 · 更多游戏准备中</span></span
+          >
+        </div>
+        <div class="game-grid" id="game-grid"></div>
+        <noscript
+          ><p>
+            请开启 JavaScript 查看游戏大厅，或直接访问 <a href="./pages/sudoku.html">数独</a> 与
+            <a href="./pages/dino.html">小恐龙</a>。
+          </p></noscript
+        >
+        <p class="collection-end"><span></span>快乐不赶时间，值得慢慢期待。<span></span></p>
+      </section>
+
+      <section class="about-strip" id="about" aria-labelledby="about-title">
+        <div class="about-symbol" aria-hidden="true">✳</div>
+        <div>
+          <h2 id="about-title">给生活，留一点游玩的空隙。</h2>
+          <p>游间想收集一些简单的快乐，陪你度过日常里的小小休息。</p>
+        </div>
+        <span class="about-label">LESS SCROLLING.<br />MORE PLAYING.</span>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+  </body>
+</html>

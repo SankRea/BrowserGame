@@ -1,0 +1,24 @@
+{
+  "name": "playroom",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Playroom 游间：数独与小恐龙组成的单人网页游戏空间",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "eslint": "10.10.0",
+    "globals": "17.12.0",
+    "prettier": "3.9.6",
+    "vite": "8.2.2"
+  }
+}

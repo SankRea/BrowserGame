@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta
+      name="description"
+      content="在游间玩一局经典数独。三档难度，支持笔记、撤销、提示和本地进度保存。"
+    />
+    <title>数独 Sudoku · Playroom 游间</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="module" src="../src/games/sudoku/index.js"></script>
+  </head>
+  <body class="sudoku-page" data-root="../">
+    <a class="skip-link" href="#sudoku-board">跳转到数独棋盘</a>
+    <header class="site-header" id="site-header"></header>
+    <main class="sudoku-shell">
+      <div class="sudoku-heading">
+        <div>
+          <div class="eyebrow">NO. 001 / LOGIC & NUMBERS</div>
+          <h1>数独<span class="sudoku-en">Sudoku.</span></h1>
+          <p>九宫格里，找到每个数字的位置。</p>
+        </div>
+        <span class="solo-label">单人 · 经典 9 × 9</span>
+      </div>
+
+      <div class="sudoku-layout" id="game" aria-busy="true">
+        <section class="board-panel" aria-label="数独游戏">
+          <div class="board-toolbar">
+            <span class="difficulty-badge" id="current-difficulty">准备中</span>
+            <span class="timer-label"
+              >用时 <time id="timer" aria-label="本局用时">00:00</time></span
+            >
+            <button class="pause-button" id="pause" type="button" aria-pressed="false" disabled>
+              暂停
+            </button>
+          </div>
+          <div class="board-frame">
+            <table
+              id="sudoku-board"
+              class="sudoku-board"
+              role="grid"
+              aria-label="数独棋盘，使用方向键移动，数字键填数"
+              aria-describedby="board-instructions"
+            >
+              <tbody id="board-body"></tbody>
+            </table>
+            <div class="board-overlay" id="board-overlay">
+              <span class="overlay-symbol" aria-hidden="true">✳</span
+              ><strong id="overlay-title">正在准备棋盘</strong>
+              <p id="overlay-description">马上开始这一局。</p>
+              <button class="sudoku-primary" id="resume" type="button" hidden>继续这一局</button>
+            </div>
+          </div>
+          <div class="board-footer">
+            <span id="progress">已填 0 格</span><span id="hint-count">已用 0 次提示</span>
+          </div>
+          <div class="completion" id="completion" hidden>
+            <span aria-hidden="true">✦</span>
+            <div>
+              <h2>这一局，解开了。</h2>
+              <p id="completion-detail"></p>
+            </div>
+          </div>
+          <p class="board-instructions" id="board-instructions">
+            每一行、每一列、每个 3 × 3 宫内，填入不重复的 1—9。
+          </p>
+        </section>
+
+        <aside class="control-panel" aria-label="游戏控制">
+          <div class="new-game-panel">
+            <div class="panel-eyebrow">YOUR NEXT CHALLENGE</div>
+            <label for="difficulty">下一局难度</label>
+            <select id="difficulty" disabled>
+              <option value="easy">简单 · 慢慢入门</option>
+              <option value="medium">中等 · 专注一会儿</option>
+              <option value="hard">困难 · 多想一步</option>
+            </select>
+            <button class="sudoku-primary" id="new-game" type="button" disabled>
+              新一局 <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+
+          <div class="input-panel">
+            <div class="input-heading">
+              <h2>填入数字</h2>
+              <span id="input-mode">填数模式</span>
+            </div>
+            <div class="number-pad" id="number-pad" role="group" aria-label="数字输入键盘">
+              <div class="mobile-pad-tools">
+                <span id="mobile-input-mode">填入数字</span
+                ><button id="mobile-notes" type="button" aria-pressed="false" disabled>
+                  笔记：关</button
+                ><button
+                  id="mobile-erase"
+                  type="button"
+                  aria-label="擦除当前格子的数字与笔记"
+                  disabled
+                >
+                  ⌫ 擦除
+                </button>
+              </div>
+              <button type="button" data-number="1" disabled>1</button
+              ><button type="button" data-number="2" disabled>2</button
+              ><button type="button" data-number="3" disabled>3</button>
+              <button type="button" data-number="4" disabled>4</button
+              ><button type="button" data-number="5" disabled>5</button
+              ><button type="button" data-number="6" disabled>6</button>
+              <button type="button" data-number="7" disabled>7</button
+              ><button type="button" data-number="8" disabled>8</button
+              ><button type="button" data-number="9" disabled>9</button>
+            </div>
+            <div class="edit-actions" role="group" aria-label="编辑工具">
+              <button id="notes" type="button" aria-pressed="false" disabled>
+                <span aria-hidden="true">✎</span>笔记
+              </button>
+              <button id="erase" type="button" disabled>
+                <span aria-hidden="true">⌫</span>擦除
+              </button>
+              <button id="undo" type="button" disabled>
+                <span aria-hidden="true">↶</span>撤销
+              </button>
+            </div>
+            <div class="assist-actions">
+              <button id="check" type="button" disabled>检查数字</button
+              ><button id="hint" type="button" disabled>提示 · 填一格</button>
+            </div>
+            <button class="restart-sudoku" id="restart" type="button" disabled>↻ 重玩本局</button>
+          </div>
+          <p class="sudoku-status" id="status" role="status" aria-live="polite" aria-atomic="true">
+            正在生成数独题目……
+          </p>
+          <p class="save-status" id="save-status">进度仅保存在当前浏览器。</p>
+        </aside>
+      </div>
+
+      <details class="sudoku-rules">
+        <summary>第一次玩？看看规则与操作 <span aria-hidden="true">+</span></summary>
+        <div class="rules-content">
+          <div>
+            <h2>只需记住三个“不重复”</h2>
+            <p>
+              将 1—9 填入空格，让每行、每列和每个粗线围起的九宫格都各有一组
+              1—9。深色数字是题目给定的，不能修改。
+            </p>
+            <p>
+              选中格子后，同行、同列和同宫会浅色高亮。重复数字会标红；“检查数字”还会指出与答案不符的填数。
+            </p>
+          </div>
+          <div>
+            <h2>留一点推理的空间</h2>
+            <p>
+              开启“笔记”，可以在空格里记录多个候选数字，再点同一个数字即可取消。“提示”会直接填好一格，并记录使用次数。
+            </p>
+            <p>
+              键盘：1—9 填数，方向键移动，N 切换笔记，Delete / Backspace 擦除，Ctrl / ⌘ + Z 撤销。
+            </p>
+            <p>难度按给定数字数量区分，实际解题难度会随题目变化。</p>
+          </div>
+        </div>
+      </details>
+      <noscript><p class="no-script">请开启浏览器 JavaScript 以生成棋盘并游玩数独。</p></noscript>
+    </main>
+    <footer class="site-footer sudoku-footer" id="site-footer"></footer>
+  </body>
+</html>

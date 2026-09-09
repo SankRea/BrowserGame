@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta
+      name="description"
+      content="小恐龙开跑了。跳过仙人掌，躲过飞鸟，在游间挑战自己的最高分。"
+    />
+    <title>小恐龙 Dino Run · Playroom 游间</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="module" src="../src/games/dino/index.js"></script>
+  </head>
+  <body class="dino-page" data-root="../">
+    <a class="skip-link" href="#dino-canvas">跳转到游戏</a>
+    <header class="site-header" id="site-header"></header>
+    <main class="dino-shell">
+      <div class="dino-heading">
+        <div>
+          <div class="eyebrow">NO. 002 / JUST KEEP RUNNING</div>
+          <h1>小恐龙<span>Dino Run.</span></h1>
+          <p>一条路，一只小恐龙，再多跑一点点。</p>
+        </div>
+        <span class="dino-category">单人 · 无尽跑酷</span>
+      </div>
+
+      <section class="runner-panel" aria-label="小恐龙游戏">
+        <div class="runner-toolbar">
+          <span class="run-state"
+            ><i aria-hidden="true"></i><span id="run-state">准备中</span></span
+          >
+          <div class="scoreboard">
+            <span class="best-score">最高 <strong id="best-score">00000</strong></span
+            ><span>本次 <strong id="score">00000</strong></span>
+          </div>
+          <button class="runner-pause" id="pause-run" type="button" disabled>
+            暂停 <span aria-hidden="true">Ⅱ</span>
+          </button>
+        </div>
+
+        <div class="runner-stage" id="runner-stage">
+          <canvas
+            id="dino-canvas"
+            width="960"
+            height="300"
+            tabindex="0"
+            aria-label="小恐龙跑酷游戏，空格或向上键跳跃，向下键下蹲"
+            aria-describedby="runner-instructions"
+            >你的浏览器需要支持 Canvas 才能游玩。</canvas
+          >
+          <div class="runner-overlay" id="runner-overlay">
+            <span class="overlay-eyebrow" id="overlay-eyebrow">A LITTLE RUN. A LITTLE FUN.</span>
+            <h2 id="overlay-title">正在准备这条路</h2>
+            <p id="overlay-description">小恐龙马上就来。</p>
+            <button class="run-primary" id="primary-action" type="button" disabled>加载中…</button>
+          </div>
+        </div>
+
+        <div class="runner-bottom">
+          <span id="speed-label">速度 1.0×</span><span>保持节奏，路还很长。</span
+          ><span id="cleared-label">已越过 0 个障碍</span>
+        </div>
+      </section>
+
+      <div class="runner-controls" role="group" aria-label="游戏操作">
+        <button class="jump-control" id="jump-control" type="button" disabled>
+          <span class="control-symbol" aria-hidden="true">↑</span
+          ><span>跳跃<small>长按跳得更高</small></span
+          ><kbd>SPACE</kbd>
+        </button>
+        <button class="duck-control" id="duck-control" type="button" aria-pressed="false" disabled>
+          <span class="control-symbol" aria-hidden="true">↓</span
+          ><span>下蹲<small>按住躲开低飞的鸟</small></span
+          ><kbd>↓</kbd>
+        </button>
+      </div>
+      <p class="run-feedback" id="run-feedback" role="status" aria-live="polite" aria-atomic="true">
+        正在加载游戏资源。
+      </p>
+
+      <div class="runner-guide" id="runner-instructions">
+        <div>
+          <span class="guide-number">01</span>
+          <h2>找准起跳时机</h2>
+          <p>空格 / ↑ / W 跳跃。短按小跳，长按高跳，也可以直接点击游戏画面。</p>
+        </div>
+        <div>
+          <span class="guide-number">02</span>
+          <h2>留意头顶</h2>
+          <p>↓ / S 下蹲，空中按下会快速落地。飞鸟会在跑出一段距离后出现。</p>
+        </div>
+        <div>
+          <span class="guide-number">03</span>
+          <h2>按自己的节奏</h2>
+          <p>P / Esc 暂停，R 重新开始。离开页面时自动暂停，回来后继续即可。</p>
+        </div>
+      </div>
+      <div class="runner-notes">
+        <span id="record-notice">最高分保存在当前浏览器。</span
+        ><a href="../licenses/chromium.txt" target="_blank" rel="noopener"
+          >Chromium 精灵素材 · BSD 许可 ↗</a
+        >
+      </div>
+      <noscript
+        ><p class="runner-error">请开启浏览器 JavaScript，以加载游戏和操作面板。</p></noscript
+      >
+    </main>
+    <footer class="site-footer dino-footer" id="site-footer"></footer>
+  </body>
+</html>
