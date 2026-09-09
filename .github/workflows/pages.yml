@@ -1,7 +1,10 @@
 name: Publish to GitHub Pages
 
-# Publishing is explicitly started from the Actions tab after Pages is enabled.
+# Publish automatically on pushes to main; manual publishing remains available.
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
